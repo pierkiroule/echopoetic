@@ -1,61 +1,38 @@
 // Recycle un poème final en nouvelles "bulles" locales.
-// Pas de réseau : tout est pensé pour rester sur l'appareil et nourrir la bibliothèque locale.
+// Pas de réseau : tout reste sur l'appareil et nourrit la bibliothèque locale.
 
-function splitIntoFragments(text) {
-  const raw = String(text || '')
-  if (!raw.trim()) return []
+import { createBubble, fragmentizeText } from './bubbles'
+import { appendBubbles, DEFAULT_STORAGE_KEY } from './importer'
 
-  const primary = raw.split(/[\n\.\!\?;:]+/g)
-  const fragments = []
+function limitFragments(pool, { min = 3, max = 7 } = {}) {
+  if (!Array.isArray(pool)) return []
+  let limited = pool.filter(Boolean)
 
-  primary.forEach((part) => {
-    part
-      .split(/[,]+/g)
-      .map((p) => p.trim())
-      .filter(Boolean)
-      .forEach((p) => fragments.push(p))
-  })
+  if (limited.length > max) {
+    limited = limited.slice(0, max)
+  }
 
-  return fragments
+  if (limited.length < min && limited.length > 0) {
+    let i = 0
+    while (limited.length < min) {
+      limited.push(limited[i % limited.length])
+      i += 1
+    }
+  }
+
+  return limited
 }
 
-function chunkByWords(text, minWords = 5, maxWords = 9) {
-  const words = String(text || '')
-    .trim()
-    .split(/\s+/)
+export function recyclePoem(poem, { min = 3, max = 7, storageKey = DEFAULT_STORAGE_KEY } = {}) {
+  const fragments = fragmentizeText(poem, { minWords: 3, maxWords: 6 })
+  const pool = limitFragments(fragments, { min, max })
+
+  const bubbles = pool
+    .map((frag) => createBubble(frag, { source: 'recyclage' }))
     .filter(Boolean)
-  const chunks = []
-  let i = 0
 
-  while (i < words.length) {
-    const remaining = words.length - i
-    const chunkSize = Math.min(maxWords, Math.max(minWords, Math.ceil(remaining / Math.ceil(remaining / maxWords))))
-    chunks.push(words.slice(i, i + chunkSize).join(' '))
-    i += chunkSize
-  }
-
-  return chunks
-}
-
-export function recyclePoem(poem, { min = 3, max = 7 } = {}) {
-  const baseFragments = splitIntoFragments(poem)
-  let pool = baseFragments.flatMap((frag) => {
-    const wordCount = frag.split(/\s+/).filter(Boolean).length
-    return wordCount > 14 ? chunkByWords(frag, 6, 10) : [frag]
-  })
-
-  // Si pas assez de fragments, on découpe progressivement les plus longs.
-  while (pool.length < min && pool.length > 0) {
-    const target = pool.shift()
-    const pieces = chunkByWords(target, 4, 8)
-    pool.push(...pieces)
-  }
-
-  if (pool.length > max) {
-    pool = pool.slice(0, max)
-  }
-
-  return pool
+  appendBubbles(bubbles, { storageKey, source: 'recyclage' })
+  return bubbles
 }
 
 export default { recyclePoem }

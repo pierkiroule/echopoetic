@@ -5,16 +5,23 @@ Coller · Assembler · Réécrire · Envoler · Recycler
 Webapp poétique solo-first, hors réseau, centrée sur le recyclage circulaire des textes.
 
 ## Concept
-- **Bulles** : fragments courts importés ou collectés localement.
+- **Bulles** : fragments courts importés ou collectés localement, formatés en objets `{ id, fragment, tag, createdAt, source }`.
 - **Le nid** : espace de composition solo-only. On assemble, on réécrit, on demande une variation via une **IA locale** (stub) comme aide à la métamorphose.
 - **Envol** : à l'export (image/texte), le poème final n'est pas archivé. Il est dissous et **recyclé** en 3 à 7 nouvelles bulles qui rejoignent la bibliothèque locale.
 - **Aucun réseau** : pas de WebRTC, pas de partage, pas de synchro. Tout reste dans le navigateur.
 
 ## Trajectoire poétique
 - **Accueil** : Le landing affiche simplement le titre et deux portes d'entrée : « Entrer dans le nid » et « Ouvrir la bibliothèque ». Aucune explication longue dans l'interface, seulement l'essentiel et un fond noir minimaliste.
-- **Collecter des bulles** : importer ou coller des fragments externes via l'importeur local. Les bulles sont stockées uniquement dans `localStorage`.
-- **Composer dans le nid** : assembler librement, réécrire, et solliciter l'IA locale (stub `src/ia/localLLM_stub.jsx`) comme aide à la métamorphose.
+- **Collecter des bulles** : importer ou coller des fragments externes via l'importeur local. Les bulles sont stockées uniquement dans `localStorage` avec un tag thématique tiré parmi `[brume, minéral, feuille, mémoire, ombre, eau, nuit, oiseau]`.
+- **Composer dans le nid** : choisir jusqu'à 10 bulles dans la bibliothèque, assembler, réécrire, et solliciter l'IA locale (stub `src/ia/localLLM_stub.jsx`) comme aide à la métamorphose.
 - **Recycler après l'envol** : à chaque export, `core/recycler.js` transforme le poème final en bulles fraîches réinjectées dans la bibliothèque locale.
+
+## Bulles : structure et création
+- `fragment` : tronçons de 3 à 6 mots générés par découpe des textes importés ou recyclés.
+- `tag` : thème choisi aléatoirement dans la liste fixe ci-dessus pour donner une couleur poétique.
+- `source` : `import` ou `recyclage` pour tracer l'origine.
+- `createdAt` : timestamp local, rien n'est synchronisé au-delà du navigateur.
+- Le stockage est append-only dans `localStorage`; un bouton « cueillir » dans la bibliothèque est désactivé dès que 10 bulles sont sélectionnées pour composer.
 
 ## Garanties solo-only
 - Pas de réseau, pas de diffusion : le nid reste clos, tout reste sur l'appareil.
@@ -24,11 +31,13 @@ Webapp poétique solo-first, hors réseau, centrée sur le recyclage circulaire 
 ## Architecture minimale
 - `src/App.jsx` : affiche `Home.jsx` et le style global.
 - `src/components/Home.jsx` : landing minimaliste centrée sur le titre, le sous-titre et deux boutons.
+- `src/components/Bibliotheque.jsx` : affichage des bulles locales avec bouton « cueillir » limité à 10 sélections.
 - `src/components/Sky.jsx` : décor animé précédent (peut être réutilisé plus tard si besoin).
+- `src/core/bubbles.js` : utilitaires de génération d'identifiants, découpe en bulles et attribution de tags.
 - `src/core/moods.jsx` : liste de tonalités de base.
 - `src/core/tagsEngine.jsx` : utilitaires de tags simples.
-- `src/core/importer.js` : import local, découpe de texte, stockage `localStorage` solo-only.
-- `src/core/recycler.js` : recycle un poème final en nouvelles bulles locales.
+- `src/core/importer.js` : import local, découpe de texte en bulles balisées et stockage `localStorage` solo-only.
+- `src/core/recycler.js` : recycle un poème final en nouvelles bulles locales enrichies d'un tag.
 - `src/ia/localLLM_stub.jsx` : stub d'IA locale pour suggérer des variations.
 - `src/styles/poetry.css` : style global minimaliste.
 
