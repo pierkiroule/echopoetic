@@ -1,0 +1,64 @@
+/* Styles sobres et animations pour le projet Échopoetic */
+
+:root{
+  --sky-top: #0b1020;
+  --sky-bottom: #1b2a4a;
+  --bubble: rgba(255,255,255,0.08);
+}
+
+html,body,#root{ height:100%; margin:0; }
+.app-root{ font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; min-height:100vh; }
+
+.sky{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+}
+
+.sky-gradient{
+  position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(ellipse at 20% 10%, rgba(255,255,255,0.03), transparent 10%),
+              radial-gradient(ellipse at 80% 80%, rgba(255,255,255,0.02), transparent 8%);
+  animation: slowShift 18s linear infinite;
+}
+
+@keyframes slowShift{
+  0%{ transform: translateY(0) scale(1); }
+  50%{ transform: translateY(-3%) scale(1.02); }
+  100%{ transform: translateY(0) scale(1); }
+}
+
+.stars{
+  position:absolute; inset:0; background-image: radial-gradient(#ffffff11 1px, transparent 1px);
+  background-size: 200px 200px; opacity:0.5; mix-blend-mode:screen; pointer-events:none;
+  animation: starDrift 60s linear infinite;
+}
+
+@keyframes starDrift{
+  from{ transform: translateY(0); }
+  to{ transform: translateY(-50px); }
+}
+
+.bubble-layer{ position:absolute; inset:0; pointer-events:none; }
+.bubble{
+  position:absolute; bottom:-10%; left: calc(10% * var(--i));
+  width: 28px; height:28px; border-radius:50%; background: var(--bubble);
+  filter: blur(6px); opacity:0.9; transform-origin:center;
+  animation: floatUp 12s linear infinite;
+}
+
+@keyframes floatUp{
+  0%{ transform: translateY(0) scale(0.8); opacity:0 }
+  10%{ opacity:0.6 }
+  50%{ transform: translateY(-60vh) scale(1.1); opacity:0.9 }
+  100%{ transform: translateY(-120vh) scale(0.9); opacity:0 }
+}
+
+.nest{ position:relative; }
+.mood-selector{ position:fixed; top:12px; right:12px; color:#fff }
+.audio-layer{ position:absolute; inset:0; pointer-events:none }
+
+/* petites règles responsive */
+@media (max-width:600px){ .bubble{ display:none } }
