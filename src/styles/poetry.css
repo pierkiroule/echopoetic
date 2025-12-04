@@ -182,3 +182,136 @@ body {
 .bibliotheque-action:not(:disabled):hover {
   transform: translateY(-1px);
 }
+
+/* Styles pour le Nid Échopoétique */
+.nest-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 360px;
+  max-height: 70vh;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #fff;
+}
+
+.nest-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.nest-empty {
+  color: #999;
+  font-style: italic;
+  margin: 8px 0;
+}
+
+.nest-feedback {
+  background: #2e7d32;
+  color: #c8e6c9;
+  padding: 8px;
+  border-radius: 3px;
+  margin: 0 0 12px 0;
+}
+
+.nest-lines {
+  margin: 12px 0;
+}
+
+.nest-line {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #222;
+  border-radius: 3px;
+  border-left: 3px solid #666;
+}
+
+.nest-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.nest-input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #444;
+  border-radius: 2px;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.nest-input:focus {
+  border-color: #fff;
+  background: #222;
+}
+
+.nest-btn {
+  padding: 4px 8px;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #fff;
+  transition: all 0.1s;
+}
+
+.nest-btn:hover:not(:disabled) {
+  background: #333;
+  border-color: #666;
+}
+
+.nest-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nest-btn-delete {
+  background: #5c2c3a;
+  border-color: #c62828;
+  color: #ff8a80;
+}
+
+.nest-btn-delete:hover {
+  background: #7d3f51;
+}
+
+.nest-export-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.nest-export-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.nest-export-btn:active {
+  transform: scale(0.98);
+}
+
