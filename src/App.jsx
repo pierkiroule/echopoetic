@@ -2,60 +2,95 @@ import React from 'react'
 import Sky from './components/Sky'
 import './styles/poetry.css'
 
-// App principal — affiche `Sky` par défaut.
+// App principale — espace d'accueil du Nid Échopoétique (solo-first, local).
 export default function App() {
   return (
     <div className="app-root">
       <div className="scene">
         <Sky />
 
-        <main className="hero" aria-label="Présentation d'Échopoetic">
-          <p className="eyebrow">Poésie résonante partagée</p>
-          <h1>Échopoetic</h1>
+        <main className="hero" aria-label="Présentation du Nid Échopoétique">
+          <p className="eyebrow">Solo-first · Hors réseau · LocalStorage</p>
+          <h1>Le Nid Échopoétique</h1>
           <p className="lede">
-            Une toile immersive pour écouter le souffle du monde, écrire à plusieurs voix et
-            laisser l'IA locale cueillir des images délicates.
+            Une webapp poétique, sans P2P, pour cueillir des bulles de texte, les assembler dans
+            un nid, réécrire à voix basse avec une IA locale et recycler chaque envol en nouveaux
+            fragments.
           </p>
 
           <div className="cta-row">
-            <button type="button" className="primary">Entrer dans l'atelier</button>
-            <button type="button" className="ghost">Découvrir le manifeste</button>
+            <button type="button" className="primary">Entrer dans le nid</button>
+            <button type="button" className="ghost">Ouvrir la bibliothèque locale</button>
           </div>
 
           <div className="pill-row" aria-hidden>
-            <span>Local-first</span>
-            <span>Audio-réactif</span>
-            <span>Coécriture</span>
+            <span>Solo-only</span>
+            <span>LocalStorage</span>
+            <span>IA d'atelier (stub)</span>
           </div>
         </main>
 
-        <section className="dev-guide" aria-label="Poursuivre le développement">
-          <h2>Comment poursuivre le dev ?</h2>
+        <section className="dev-guide" aria-label="Cycle poétique circulaire">
+          <h2>Coller · Assembler · Réécrire · Envoler · Recycler</h2>
           <p className="dev-lede">
-            Quelques repères rapides pour itérer sans perdre la tonalité immersive :
+            Pas de réseau, pas de diffusion : tout se passe sur l'appareil. Chaque poème partagé
+            est recyclé en bulles fraîches qui nourrissent le nid.
           </p>
 
           <div className="guide-grid">
             <article className="guide-card">
-              <h3>Itérer sur la scène</h3>
-              <p>Ajoute des motifs audio-réactifs dans <code>src/components/Sky.jsx</code> ou des shaders légers.</p>
-              <button type="button" className="ghost">Voir les hooks audio</button>
+              <h3>Collecter des bulles</h3>
+              <p>
+                Importe ou colle des fragments externes via l'importeur local. Les bulles sont
+                stockées uniquement dans le stockage local du navigateur.
+              </p>
+              <button type="button" className="ghost">Coller un texte</button>
             </article>
 
             <article className="guide-card">
-              <h3>Brancher l'atelier</h3>
-              <p>Connecte les CTA à ton flow (routing ou modale) via <code>App.jsx</code>.</p>
+              <h3>Composer dans le nid</h3>
+              <p>
+                Assemble les bulles, réécris-les librement et sollicite l'IA locale (stub
+                <code>ia/localLLM_stub.jsx</code>) comme aide à la métamorphose.
+              </p>
               <div className="guide-actions">
-                <button type="button" className="primary">Lier l'atelier</button>
-                <button type="button" className="ghost">Créer la modale</button>
+                <button type="button" className="primary">Ouvrir le nid</button>
+                <button type="button" className="ghost">Appeler l'IA locale</button>
               </div>
             </article>
 
             <article className="guide-card">
-              <h3>Soigner l'accessibilité</h3>
-              <p>Teste le contraste, ajoute des focus visibles et réduis les animations si besoin.</p>
-              <button type="button" className="ghost">Checklist a11y</button>
+              <h3>Recycler après l'envol</h3>
+              <p>
+                Quand un poème est exporté (image ou texte), il est dissous en 3 à 7 nouvelles
+                bulles via <code>core/recycler.js</code> et réinjecté dans la bibliothèque locale.
+              </p>
+              <button type="button" className="ghost">Voir la boucle circulaire</button>
             </article>
+          </div>
+        </section>
+
+        <section className="solo-notes" aria-label="Garanties solo-only">
+          <div className="note-card">
+            <h3>Sans réseau</h3>
+            <p>
+              Aucun WebRTC, aucune synchro, aucune API externe : le nid reste clos, tout reste
+              sur l'appareil.
+            </p>
+          </div>
+          <div className="note-card">
+            <h3>LocalStorage</h3>
+            <p>
+              Bibliothèque et états sont persistés avec <code>localStorage</code>. La
+              bibliothèque est vidée seulement sur action explicite.
+            </p>
+          </div>
+          <div className="note-card">
+            <h3>Recyclage poétique</h3>
+            <p>
+              Chaque partage déclenche une métamorphose : le poème final se défait en bulles qui
+              servent de matière première aux prochaines œuvres.
+            </p>
           </div>
         </section>
       </div>
